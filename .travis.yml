@@ -11,7 +11,7 @@ env:
   global:
     - PORT=3000
     - MONGODB_URL=mongodb://localhost:27017/node-boilerplate
-    - JWT_SECRET=thisisasamplesecret
+    - JWT_SECRET=5a03b1df75aa415212b5f2a791ae18fbbca7456c
     - JWT_ACCESS_EXPIRATION_MINUTES=30
     - JWT_REFRESH_EXPIRATION_DAYS=30
 script:
