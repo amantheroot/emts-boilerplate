@@ -1,9 +1,9 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
-import faker from 'faker';
-import User from '../../src/models/user.model';
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import faker from "faker";
+import User from "../../src/models/user.model";
 
-const password = 'password1';
+const password = "password1";
 const salt = bcrypt.genSaltSync(8);
 const hashedPassword = bcrypt.hashSync(password, salt);
 
@@ -12,7 +12,7 @@ const userOne = {
   name: faker.name.findName(),
   email: faker.internet.email().toLowerCase(),
   password,
-  role: 'user',
+  role: "user",
   isEmailVerified: false,
 };
 
@@ -21,7 +21,7 @@ const userTwo = {
   name: faker.name.findName(),
   email: faker.internet.email().toLowerCase(),
   password,
-  role: 'user',
+  role: "user",
   isEmailVerified: false,
 };
 
@@ -30,7 +30,7 @@ const admin = {
   name: faker.name.findName(),
   email: faker.internet.email().toLowerCase(),
   password,
-  role: 'admin',
+  role: "admin",
   isEmailVerified: false,
 };
 

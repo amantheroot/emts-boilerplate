@@ -1,1 +1,1 @@
-declare module 'mongoose-private'
+declare module "mongoose-private";
