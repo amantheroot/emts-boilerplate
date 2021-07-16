@@ -1,2 +1,4 @@
-module.exports.Token = require('./token.model');
-module.exports.User = require('./user.model');
+import Token from "./token.model";
+import User from "./user.model";
+
+export { Token, User };

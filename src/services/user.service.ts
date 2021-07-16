@@ -1,6 +1,6 @@
-const httpStatus = require('http-status');
-const { User } = require('../models');
-const ApiError = require('../utils/ApiError');
+import httpStatus from 'http-status';
+import { User } from '../models';
+import ApiError from '../utils/ApiError';
 
 /**
  * Create a user
