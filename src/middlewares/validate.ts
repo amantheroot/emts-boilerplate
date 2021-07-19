@@ -3,8 +3,9 @@ import httpStatus from "http-status";
 import pick from "../utils/pick";
 import ApiError from "../utils/ApiError";
 import { NextFunction, Request, Response } from "express";
+import { Object } from "@/interfaces/object.interface";
 
-const validate = (schema: { [key: string]: any }) => (req: Request, res: Response, next: NextFunction) => {
+const validate = (schema: Object<Joi.ObjectSchema>) => (req: Request, res: Response, next: NextFunction) => {
   const validSchema = pick(schema, ["params", "query", "body"]);
   const object = pick(req, Object.keys(validSchema));
   const { value, error } = Joi.compile(validSchema)

@@ -3,8 +3,9 @@ import validator from "validator";
 import bcrypt from "bcryptjs";
 import { toJSON, paginate } from "./plugins";
 import { roles } from "../config/roles";
+import { User } from "@/interfaces/models/user.interface";
 
-const userSchema = new Schema(
+const userSchema = new Schema<User>(
   {
     name: {
       type: String,
@@ -71,12 +72,12 @@ userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
  * @returns {Promise<boolean>}
  */
 userSchema.methods.isPasswordMatch = async function (password) {
-  const user = this as any;
+  const user = this;
   return bcrypt.compare(password, user.password);
 };
 
 userSchema.pre("save", async function (next) {
-  const user = this as any;
+  const user = this;
   if (user.isModified("password")) {
     user.password = await bcrypt.hash(user.password, 8);
   }
@@ -86,6 +87,6 @@ userSchema.pre("save", async function (next) {
 /**
  * @typedef User
  */
-const User = model("User", userSchema);
+const User = model<User>("User", userSchema);
 
 export default User;

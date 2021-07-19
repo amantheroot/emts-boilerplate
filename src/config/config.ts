@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import path from "path";
 import Joi from "joi";
-import ENVSchema from "@/types/config/env.interface";
+import { ENVSchema } from "@/interfaces/config/env.interface";
 
 dotenv.config({ path: path.join(__dirname, "../../.env") });
 

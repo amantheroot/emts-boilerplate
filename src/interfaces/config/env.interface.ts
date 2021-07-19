@@ -1,4 +1,4 @@
-export default interface ENVSchema {
+export interface ENVSchema {
   NODE_ENV: "production" | "development" | "test";
   PORT: number;
   MONGODB_URL: string;
