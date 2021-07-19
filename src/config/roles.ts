@@ -1,5 +1,5 @@
-const allRoles: { [key: string]: string[] } = {
-  user: [],
+const allRoles = {
+  user: [] as string[],
   admin: ["getUsers", "manageUsers"],
 };
 
