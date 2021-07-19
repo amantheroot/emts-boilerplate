@@ -1,9 +1,9 @@
 import httpStatus from "http-status";
-import pick from "../utils/pick";
-import ApiError from "../utils/ApiError";
-import catchAsync from "../utils/catchAsync";
-import { userService } from "../services";
 import { Request, Response } from "express";
+import pick from "@/utils/pick";
+import ApiError from "@/utils/ApiError";
+import catchAsync from "@/utils/catchAsync";
+import { userService } from "@/services";
 
 export const createUser = catchAsync(async (req: Request, res: Response) => {
   const user = await userService.createUser(req.body);

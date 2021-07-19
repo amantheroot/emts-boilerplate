@@ -1,8 +1,8 @@
 import { Strategy as JwtStrategy, ExtractJwt, VerifiedCallback } from "passport-jwt";
+import { JwtPayload } from "jsonwebtoken";
+import { User } from "@/models";
 import config from "./config";
 import { tokenTypes } from "./tokens";
-import { User } from "../models";
-import { JwtPayload } from "jsonwebtoken";
 
 const jwtOptions = {
   secretOrKey: config.jwt.secret,

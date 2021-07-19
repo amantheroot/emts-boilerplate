@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import httpStatus from "http-status";
-import config from "../config/config";
-import logger from "../config/logger";
-import ApiError from "../utils/ApiError";
-import { ApiError as ApiErrorType } from "@/interfaces/utils/apiError.interface";
 import { NextFunction, Request, Response } from "express";
+import config from "@/config/config";
+import logger from "@/config/logger";
+import ApiError from "@/utils/ApiError";
+import { ApiError as ApiErrorType } from "@/interfaces/utils/apiError.interface";
 
 export const errorConverter = (err: ApiErrorType, req: Request, res: Response, next: NextFunction) => {
   let error = err;
