@@ -1,13 +1,15 @@
 import httpStatus from "http-status";
-import { User } from "../models";
-import ApiError from "../utils/ApiError";
+import { ObjectId } from "mongoose";
+import { User } from "@/models";
+import ApiError from "@/utils/ApiError";
+import { User as UserObj } from "@/interfaces/entities/user.interface";
 
 /**
  * Create a user
  * @param {Object} userBody
  * @returns {Promise<User>}
  */
-export const createUser = async (userBody: any) => {
+export const createUser = async (userBody: UserObj) => {
   if (await (User as any).isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Email already taken");
   }
@@ -33,7 +35,7 @@ export const queryUsers = async (filter: Object, options: Object) => {
  * @param {ObjectId} id
  * @returns {Promise<User>}
  */
-export const getUserById = async (id: string) => {
+export const getUserById = async (id: ObjectId | string) => {
   return User.findById(id);
 };
 
@@ -52,7 +54,7 @@ export const getUserByEmail = async (email: string) => {
  * @param {Object} updateBody
  * @returns {Promise<User>}
  */
-export const updateUserById = async (userId: string, updateBody: any) => {
+export const updateUserById = async (userId: ObjectId | string, updateBody: UserObj) => {
   const user = await getUserById(userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, "User not found");
@@ -70,7 +72,7 @@ export const updateUserById = async (userId: string, updateBody: any) => {
  * @param {ObjectId} userId
  * @returns {Promise<User>}
  */
-export const deleteUserById = async (userId: string) => {
+export const deleteUserById = async (userId: ObjectId | string) => {
   const user = await getUserById(userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, "User not found");

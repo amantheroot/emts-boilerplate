@@ -10,8 +10,8 @@ import config from "./config/config";
 import { morganSuccessHandler, morganErrorHandler } from "./config/morgan";
 import { jwtStrategy } from "./config/passport";
 import { authLimiter } from "./middlewares/rateLimiter";
-import routes from "./routes/v1";
 import { errorConverter, errorHandler } from "./middlewares/error";
+import routes from "./routes/v1";
 import ApiError from "./utils/ApiError";
 
 const app = express();

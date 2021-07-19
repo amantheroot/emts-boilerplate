@@ -1,9 +1,9 @@
 import httpStatus from "http-status";
+import Token from "@/models/token.model";
+import ApiError from "@/utils/ApiError";
+import { tokenTypes } from "@/config/tokens";
 import * as tokenService from "./token.service";
 import * as userService from "./user.service";
-import Token from "../models/token.model";
-import ApiError from "../utils/ApiError";
-import { tokenTypes } from "../config/tokens";
 
 /**
  * Login with username and password
@@ -12,7 +12,7 @@ import { tokenTypes } from "../config/tokens";
  * @returns {Promise<User>}
  */
 export const loginUserWithEmailAndPassword = async (email: string, password: string) => {
-  const user = await userService.getUserByEmail(email) as any;
+  const user = await userService.getUserByEmail(email);
   if (!user || !(await user.isPasswordMatch(password))) {
     throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect email or password");
   }
