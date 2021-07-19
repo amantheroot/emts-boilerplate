@@ -1,14 +1,15 @@
-import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
+import { Strategy as JwtStrategy, ExtractJwt, VerifiedCallback } from "passport-jwt";
 import config from "./config";
 import { tokenTypes } from "./tokens";
 import { User } from "../models";
+import { JwtPayload } from "jsonwebtoken";
 
 const jwtOptions = {
   secretOrKey: config.jwt.secret,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
-const jwtVerify = async (payload, done) => {
+const jwtVerify = async (payload: JwtPayload, done: VerifiedCallback) => {
   try {
     if (payload.type !== tokenTypes.ACCESS) {
       throw new Error("Invalid token type");

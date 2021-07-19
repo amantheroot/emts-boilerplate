@@ -32,7 +32,7 @@ if (error) {
   throw new Error(`Config validation error: ${error.message}`);
 }
 
-const env = {
+export default {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
   mongoose: {
@@ -62,5 +62,3 @@ const env = {
     from: envVars.EMAIL_FROM,
   },
 };
-
-export default env;

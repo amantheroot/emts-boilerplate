@@ -4,7 +4,13 @@
     "node": true,
     "jest": true
   },
-  "extends": ["plugin:@typescript-eslint/recommended", "airbnb-base", "plugin:jest/recommended", "plugin:security/recommended", "plugin:prettier/recommended"],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "airbnb-typescript",
+    "plugin:jest/recommended",
+    "plugin:security/recommended",
+    "plugin:prettier/recommended"
+  ],
   "plugins": ["jest", "security", "prettier"],
   "parserOptions": {
     "ecmaVersion": 2018

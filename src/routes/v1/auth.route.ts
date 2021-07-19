@@ -1,7 +1,7 @@
 import express from "express";
 import validate from "../../middlewares/validate";
-import authValidation from "../../validations/auth.validation";
-import authController from "../../controllers/auth.controller";
+import * as authValidation from "../../validations/auth.validation";
+import * as authController from "../../controllers/auth.controller";
 import auth from "../../middlewares/auth";
 
 const router = express.Router();
@@ -15,7 +15,7 @@ router.post("/reset-password", validate(authValidation.resetPassword), authContr
 router.post("/send-verification-email", auth(), authController.sendVerificationEmail);
 router.post("/verify-email", validate(authValidation.verifyEmail), authController.verifyEmail);
 
-module.exports = router;
+export default router;
 
 /**
  * @swagger
