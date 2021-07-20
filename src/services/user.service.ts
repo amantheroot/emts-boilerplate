@@ -54,7 +54,7 @@ export const getUserByEmail = async (email: string) => {
  * @param {Object} updateBody
  * @returns {Promise<User>}
  */
-export const updateUserById = async (userId: Types.ObjectId, updateBody: UserObj) => {
+export const updateUserById = async (userId: Types.ObjectId | string, updateBody: UserObj) => {
   const user = await getUserById(userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, "User not found");
