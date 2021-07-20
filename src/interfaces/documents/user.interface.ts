@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document } from "@/interfaces/extensions/document.interface";
 
 export interface UserDoc extends Document {
   name: string;
