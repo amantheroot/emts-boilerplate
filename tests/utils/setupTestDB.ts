@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import config from "@/config/config";
 
-const setupTestDB = () => {
+const setupTestDB = (): void => {
   beforeAll(async () => {
     await mongoose.connect(config.mongoose.url, config.mongoose.options);
   });

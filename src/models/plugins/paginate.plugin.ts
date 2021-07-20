@@ -2,7 +2,7 @@
 
 import { Schema } from "mongoose";
 
-const paginate = (schema: Schema) => {
+const paginate = (schema: Schema): void => {
   /**
    * @typedef {Object} QueryResult
    * @property {Document[]} results - Results found

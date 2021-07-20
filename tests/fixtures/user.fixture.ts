@@ -35,6 +35,6 @@ export const admin = {
   isEmailVerified: false,
 } as UserObj;
 
-export const insertUsers = async (users: UserObj[]) => {
+export const insertUsers = async (users: UserObj[]): Promise<void> => {
   await User.insertMany(users.map((user) => ({ ...user, password: hashedPassword })));
 };

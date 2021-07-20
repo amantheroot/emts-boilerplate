@@ -7,6 +7,7 @@ import tokenTypes from "@/config/tokens";
 import { Token } from "@/models";
 import ApiError from "@/utils/ApiError";
 import { UserDoc } from "@/interfaces/documents/user.interface";
+import { TokenDoc } from "@/interfaces/documents/token.interface";
 import * as userService from "./user.service";
 
 /**
@@ -22,7 +23,7 @@ export const generateToken = (
   expires: moment.Moment,
   type: string,
   secret = config.jwt.secret,
-) => {
+): string => {
   const payload = {
     sub: userId,
     iat: moment().unix(),
@@ -47,7 +48,7 @@ export const saveToken = async (
   expires: moment.Moment,
   type: string,
   blacklisted = false,
-) => {
+): Promise<TokenDoc> => {
   const tokenDoc = await Token.create({
     token,
     user: userId,
@@ -64,7 +65,7 @@ export const saveToken = async (
  * @param {string} type
  * @returns {Promise<Token>}
  */
-export const verifyToken = async (token: string, type: string) => {
+export const verifyToken = async (token: string, type: string): Promise<TokenDoc> => {
   const payload = jwt.verify(token, config.jwt.secret);
   const tokenDoc = await Token.findOne({ token, type, user: payload.sub as string, blacklisted: false });
   if (!tokenDoc) {
@@ -78,7 +79,9 @@ export const verifyToken = async (token: string, type: string) => {
  * @param {User} user
  * @returns {Promise<Object>}
  */
-export const generateAuthTokens = async (user: UserDoc) => {
+export const generateAuthTokens = async (
+  user: UserDoc,
+): Promise<Record<"access" | "refresh", { token: string; expires: Date }>> => {
   const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, "minutes");
   const accessToken = generateToken(user.id, accessTokenExpires, tokenTypes.ACCESS);
 
@@ -103,7 +106,7 @@ export const generateAuthTokens = async (user: UserDoc) => {
  * @param {string} email
  * @returns {Promise<string>}
  */
-export const generateResetPasswordToken = async (email: string) => {
+export const generateResetPasswordToken = async (email: string): Promise<string> => {
   const user = await userService.getUserByEmail(email);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, "No users found with this email");
@@ -119,7 +122,7 @@ export const generateResetPasswordToken = async (email: string) => {
  * @param {User} user
  * @returns {Promise<string>}
  */
-export const generateVerifyEmailToken = async (user: UserDoc) => {
+export const generateVerifyEmailToken = async (user: UserDoc): Promise<string> => {
   const expires = moment().add(config.jwt.verifyEmailExpirationMinutes, "minutes");
   const verifyEmailToken = generateToken(user.id, expires, tokenTypes.VERIFY_EMAIL);
   await saveToken(verifyEmailToken, user.id, expires, tokenTypes.VERIFY_EMAIL);
