@@ -1,6 +1,6 @@
 import { Request } from "express";
-import { User } from "@/interfaces/models/user.interface";
+import { UserDoc } from "@/interfaces/documents/user.interface";
 
 export interface AuthRequest extends Request {
-  user: User;
+  user: UserDoc;
 }

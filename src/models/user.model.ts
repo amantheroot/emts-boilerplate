@@ -2,10 +2,11 @@ import { Schema, model } from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
 import { roles } from "@/config/roles";
-import { User } from "@/interfaces/models/user.interface";
+import { UserDoc } from "@/interfaces/documents/user.interface";
+import { UserModel } from "@/interfaces/models/user.interface";
 import { toJSON, paginate } from "./plugins";
 
-const userSchema = new Schema<User>(
+const userSchema = new Schema<UserDoc>(
   {
     name: {
       type: String,
@@ -87,6 +88,6 @@ userSchema.pre("save", async function (next) {
 /**
  * @typedef User
  */
-const User = model<User>("User", userSchema);
+const User = model<UserDoc>("User", userSchema) as UserModel;
 
 export default User;

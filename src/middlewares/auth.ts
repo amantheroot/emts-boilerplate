@@ -3,11 +3,11 @@ import httpStatus from "http-status";
 import { NextFunction, Request, Response } from "express";
 import ApiError from "@/utils/ApiError";
 import { roleRights } from "@/config/roles";
-import { User } from "@/interfaces/models/user.interface";
+import { UserDoc } from "@/interfaces/documents/user.interface";
 
 const verifyCallback =
   (req: Request, resolve: (value?: unknown) => void, reject: (reason?: any) => void, requiredRights: string[]) =>
-  async (err: Error, user: User, info: string) => {
+  async (err: Error, user: UserDoc, info: string) => {
     if (err || info || !user) {
       return reject(new ApiError(httpStatus.UNAUTHORIZED, "Please authenticate"));
     }

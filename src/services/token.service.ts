@@ -6,7 +6,7 @@ import config from "@/config/config";
 import { tokenTypes } from "@/config/tokens";
 import { Token } from "@/models";
 import ApiError from "@/utils/ApiError";
-import { User } from "@/interfaces/models/user.interface";
+import { UserDoc } from "@/interfaces/documents/user.interface";
 import * as userService from "./user.service";
 
 /**
@@ -78,7 +78,7 @@ export const verifyToken = async (token: string, type: string) => {
  * @param {User} user
  * @returns {Promise<Object>}
  */
-export const generateAuthTokens = async (user: User) => {
+export const generateAuthTokens = async (user: UserDoc) => {
   const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, "minutes");
   const accessToken = generateToken(user.id, accessTokenExpires, tokenTypes.ACCESS);
 
@@ -119,7 +119,7 @@ export const generateResetPasswordToken = async (email: string) => {
  * @param {User} user
  * @returns {Promise<string>}
  */
-export const generateVerifyEmailToken = async (user: User) => {
+export const generateVerifyEmailToken = async (user: UserDoc) => {
   const expires = moment().add(config.jwt.verifyEmailExpirationMinutes, "minutes");
   const verifyEmailToken = generateToken(user.id, expires, tokenTypes.VERIFY_EMAIL);
   await saveToken(verifyEmailToken, user.id, expires, tokenTypes.VERIFY_EMAIL);

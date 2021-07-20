@@ -1,9 +1,9 @@
 import { Schema, SchemaTypes, model } from "mongoose";
 import { tokenTypes } from "@/config/tokens";
-import { Token } from "@/interfaces/models/token.interface";
+import { TokenDoc } from "@/interfaces/documents/token.interface";
 import toJSON from "./plugins/toJSON.plugin";
 
-const tokenSchema = new Schema<Token>(
+const tokenSchema = new Schema<TokenDoc>(
   {
     token: {
       type: String,
@@ -40,6 +40,6 @@ tokenSchema.plugin(toJSON);
 /**
  * @typedef Token
  */
-const Token = model<Token>("Token", tokenSchema);
+const Token = model<TokenDoc>("Token", tokenSchema);
 
 export default Token;

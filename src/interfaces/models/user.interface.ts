@@ -1,11 +1,9 @@
-import { Document, ObjectId } from "mongoose";
+import { Model, ObjectId } from "mongoose";
+import { UserDoc } from "@/interfaces/documents/user.interface";
+import { Object } from "../object.interface";
+import { PaginateResult } from "../plugins/paginateResult.interface";
 
-export interface User extends Document {
-  name: string;
-  email: string;
-  password: string;
-  role: string;
-  isEmailVerified: boolean;
-  isEmailTaken: (email: string, userId: ObjectId | string) => boolean;
-  isPasswordMatch: (password: string) => boolean;
+export interface UserModel extends Model<UserDoc> {
+  isEmailTaken: (email: string, userId?: ObjectId | string) => boolean;
+  paginate: (filter: Object, options: Object) => PaginateResult<UserDoc>;
 }

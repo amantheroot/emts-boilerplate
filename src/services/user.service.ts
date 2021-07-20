@@ -10,7 +10,7 @@ import { User as UserObj } from "@/interfaces/entities/user.interface";
  * @returns {Promise<User>}
  */
 export const createUser = async (userBody: UserObj) => {
-  if (await (User as any).isEmailTaken(userBody.email)) {
+  if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Email already taken");
   }
   return User.create(userBody);
@@ -26,7 +26,7 @@ export const createUser = async (userBody: UserObj) => {
  * @returns {Promise<QueryResult>}
  */
 export const queryUsers = async (filter: Object, options: Object) => {
-  const users = await (User as any).paginate(filter, options);
+  const users = await User.paginate(filter, options);
   return users;
 };
 
