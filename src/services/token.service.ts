@@ -3,7 +3,7 @@ import moment from "moment";
 import httpStatus from "http-status";
 import { Types } from "mongoose";
 import config from "@/config/config";
-import { tokenTypes } from "@/config/tokens";
+import tokenTypes from "@/config/tokens";
 import { Token } from "@/models";
 import ApiError from "@/utils/ApiError";
 import { UserDoc } from "@/interfaces/documents/user.interface";

@@ -11,7 +11,7 @@ import { tokenService, emailService } from "@/services";
 import ApiError from "@/utils/ApiError";
 import { User, Token } from "@/models";
 import { roleRights } from "@/config/roles";
-import { tokenTypes } from "@/config/tokens";
+import tokenTypes from "@/config/tokens";
 import { User as UserObj } from "@/interfaces/entities/user.interface";
 import { AuthRequest } from "@/interfaces/middlewares/request.interface";
 import setupTestDB from "@@/tests/utils/setupTestDB";

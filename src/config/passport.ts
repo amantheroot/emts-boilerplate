@@ -2,7 +2,7 @@ import { Strategy as JwtStrategy, ExtractJwt, VerifiedCallback } from "passport-
 import { JwtPayload } from "jsonwebtoken";
 import { User } from "@/models";
 import config from "./config";
-import { tokenTypes } from "./tokens";
+import tokenTypes from "./tokens";
 
 const jwtOptions = {
   secretOrKey: config.jwt.secret,
@@ -24,4 +24,6 @@ const jwtVerify = async (payload: JwtPayload, done: VerifiedCallback) => {
   }
 };
 
-export const jwtStrategy = new JwtStrategy(jwtOptions, jwtVerify);
+const jwtStrategy = new JwtStrategy(jwtOptions, jwtVerify);
+
+export default jwtStrategy;

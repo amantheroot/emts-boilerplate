@@ -4,7 +4,7 @@ import paginate from "@/models/plugins/paginate.plugin";
 import { PaginateResult } from "@/interfaces/plugins/paginateResult.interface";
 
 interface TestModel extends Model<Document> {
-  paginate: (filter: Object, options: Object) => PaginateResult;
+  paginate: (filter: Record<string, unknown>, options: Record<string, unknown>) => PaginateResult;
 }
 
 const projectSchema = new Schema({

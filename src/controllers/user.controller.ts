@@ -1,5 +1,5 @@
 import httpStatus from "http-status";
-import { Request, Response } from "express";
+import { Response } from "express";
 import pick from "@/utils/pick";
 import ApiError from "@/utils/ApiError";
 import catchAsync from "@/utils/catchAsync";

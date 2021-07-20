@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 import Token from "@/models/token.model";
 import ApiError from "@/utils/ApiError";
-import { tokenTypes } from "@/config/tokens";
+import tokenTypes from "@/config/tokens";
 import * as tokenService from "./token.service";
 import * as userService from "./user.service";
 
@@ -45,7 +45,7 @@ export const refreshAuth = async (refreshToken: string) => {
       throw new Error();
     }
     await refreshTokenDoc.remove();
-    return tokenService.generateAuthTokens(user);
+    return await tokenService.generateAuthTokens(user);
   } catch (error) {
     throw new ApiError(httpStatus.UNAUTHORIZED, "Please authenticate");
   }

@@ -1,6 +1,6 @@
 import moment from "moment";
 import config from "@/config/config";
-import { tokenTypes } from "@/config/tokens";
+import tokenTypes from "@/config/tokens";
 import * as tokenService from "@/services/token.service";
 import { userOne, admin } from "./user.fixture";
 

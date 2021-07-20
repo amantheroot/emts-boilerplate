@@ -1,5 +1,5 @@
 import { Schema, SchemaTypes, model } from "mongoose";
-import { tokenTypes } from "@/config/tokens";
+import tokenTypes from "@/config/tokens";
 import { TokenDoc } from "@/interfaces/documents/token.interface";
 import toJSON from "./plugins/toJSON.plugin";
 

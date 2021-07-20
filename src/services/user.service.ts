@@ -25,7 +25,7 @@ export const createUser = async (userBody: UserObj) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
-export const queryUsers = async (filter: Object, options: Object) => {
+export const queryUsers = async (filter: Record<string, unknown>, options: Record<string, unknown>) => {
   const users = await User.paginate(filter, options);
   return users;
 };
