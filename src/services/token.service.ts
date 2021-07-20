@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import moment from "moment";
 import httpStatus from "http-status";
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 import config from "@/config/config";
 import { tokenTypes } from "@/config/tokens";
 import { Token } from "@/models";
@@ -18,7 +18,7 @@ import * as userService from "./user.service";
  * @returns {string}
  */
 export const generateToken = (
-  userId: ObjectId | string,
+  userId: Types.ObjectId | string,
   expires: moment.Moment,
   type: string,
   secret = config.jwt.secret,
@@ -43,7 +43,7 @@ export const generateToken = (
  */
 export const saveToken = async (
   token: string,
-  userId: ObjectId | string,
+  userId: Types.ObjectId | string,
   expires: moment.Moment,
   type: string,
   blacklisted = false,

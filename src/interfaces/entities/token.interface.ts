@@ -1,8 +1,8 @@
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 
 export interface Token {
   token: string;
-  user: ObjectId | string;
+  user: Types.ObjectId | string;
   type: string;
   expires: Date;
   blacklisted: boolean;
