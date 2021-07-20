@@ -17,6 +17,7 @@ import { AuthRequest } from "@/interfaces/middlewares/request.interface";
 import setupTestDB from "@@/tests/utils/setupTestDB";
 import { userOne, admin, insertUsers } from "@@/tests/fixtures/user.fixture";
 import { userOneAccessToken, adminAccessToken } from "@@/tests/fixtures/token.fixture";
+import { SentMessageInfo } from "nodemailer/lib/smtp-transport";
 
 setupTestDB();
 
@@ -241,7 +242,7 @@ describe("Auth routes", () => {
       jest.spyOn(emailService.transport, "sendMail").mockResolvedValue({
         success: true,
         dummy: true,
-      } as any);
+      } as unknown as SentMessageInfo);
     });
 
     test("should return 204 and send reset password email to the user", async () => {
@@ -371,7 +372,7 @@ describe("Auth routes", () => {
       jest.spyOn(emailService.transport, "sendMail").mockResolvedValue({
         success: true,
         dummy: true,
-      } as any);
+      } as unknown as SentMessageInfo);
     });
 
     test("should return 204 and send verification email to the user", async () => {
