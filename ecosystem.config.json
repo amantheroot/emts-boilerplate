@@ -2,7 +2,7 @@
   "apps": [
     {
       "name": "app",
-      "script": "build/index.js",
+      "script": "build/src/index.js",
       "instances": 1,
       "autorestart": true,
       "watch": false,
