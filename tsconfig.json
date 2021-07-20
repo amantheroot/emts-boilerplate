@@ -10,7 +10,7 @@
     "outDir": "build",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["src/*"],
       "@@/*": ["./*"]
     },
     "typeRoots": ["./src/types", "./node_modules/@types"],
@@ -18,6 +18,6 @@
     "resolveJsonModule": true,
     "skipLibCheck": true
   },
-  "include": ["./**/*"],
+  "include": ["**/*"],
   "exclude": ["build", "node_modules", "./src/types"]
 }

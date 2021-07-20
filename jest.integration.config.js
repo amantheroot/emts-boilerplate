@@ -1,5 +1,3 @@
-const path = require("path");
-
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
@@ -14,7 +12,7 @@ module.exports = {
   coveragePathIgnorePatterns: ["node_modules", "src/config", "src/app.ts", "tests"],
   coverageReporters: ["text", "lcov", "clover", "html"],
   moduleNameMapper: {
-    "@/(.*)": path.resolve(__dirname, "./src/$1"),
-    "@@/(.*)": path.resolve(__dirname, "./$1"),
+    "^@/(.*)": "<rootDir>/src/$1",
+    "^@@/(.*)": "<rootDir>/$1",
   },
 };
