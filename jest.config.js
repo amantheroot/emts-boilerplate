@@ -1,7 +1,6 @@
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
-  moduleDirectories: ["node_modules", "src", "."],
   modulePathIgnorePatterns: ["<rootDir>/tests/integration", "<rootDir>/build"],
   testEnvironmentOptions: {
     NODE_ENV: "test",
@@ -9,4 +8,8 @@ module.exports = {
   restoreMocks: true,
   coveragePathIgnorePatterns: ["node_modules", "src/config", "src/app.ts", "tests"],
   coverageReporters: ["text", "lcov", "clover", "html"],
+  moduleNameMapper: {
+    "^@/(.*)": "<rootDir>/src/$1",
+    "^@@/(.*)": "<rootDir>/$1",
+  },
 };
