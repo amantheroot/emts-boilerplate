@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
-import setupTestDB from "../../../utils/setupTestDB";
-import paginate from "../../../../src/models/plugins/paginate.plugin";
+import { model, Schema, SchemaTypes } from "mongoose";
+import setupTestDB from "@@/tests/utils/setupTestDB";
+import paginate from "@/models/plugins/paginate.plugin";
 
-const projectSchema = mongoose.Schema({
+const projectSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -16,22 +16,22 @@ projectSchema.virtual("tasks", {
 });
 
 projectSchema.plugin(paginate);
-const Project = mongoose.model("Project", projectSchema);
+const Project = model("Project", projectSchema);
 
-const taskSchema = mongoose.Schema({
+const taskSchema = new Schema({
   name: {
     type: String,
     required: true,
   },
   project: {
-    type: mongoose.SchemaTypes.ObjectId,
+    type: SchemaTypes.ObjectId,
     ref: "Project",
     required: true,
   },
 });
 
 taskSchema.plugin(paginate);
-const Task = mongoose.model("Task", taskSchema);
+const Task = model("Task", taskSchema);
 
 setupTestDB();
 

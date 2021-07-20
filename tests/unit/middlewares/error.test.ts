@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import httpStatus from "http-status";
 import httpMocks from "node-mocks-http";
-import { errorConverter, errorHandler } from "../../../src/middlewares/error";
-import ApiError from "../../../src/utils/ApiError";
-import config from "../../../src/config/config";
-import logger from "../../../src/config/logger";
+import { errorConverter, errorHandler } from "@/middlewares/error";
+import ApiError from "@/utils/ApiError";
+import config from "@/config/config";
+import logger from "@/config/logger";
 
 describe("Error middlewares", () => {
   describe("Error converter", () => {
@@ -18,7 +18,7 @@ describe("Error middlewares", () => {
     });
 
     test("should convert an Error to ApiError and preserve its status and message", () => {
-      const error = new Error("Any error");
+      const error = new Error("Any error") as ApiError;
       error.statusCode = httpStatus.BAD_REQUEST;
       const next = jest.fn();
 
@@ -51,7 +51,7 @@ describe("Error middlewares", () => {
     });
 
     test("should convert an Error without message to ApiError with default message of that http status", () => {
-      const error = new Error();
+      const error = new Error() as ApiError;
       error.statusCode = httpStatus.BAD_REQUEST;
       const next = jest.fn();
 
@@ -102,7 +102,7 @@ describe("Error middlewares", () => {
 
   describe("Error handler", () => {
     beforeEach(() => {
-      jest.spyOn(logger, "error").mockImplementation(() => {});
+      jest.spyOn(logger, "error").mockImplementation((() => {}) as any);
     });
 
     test("should send proper error response and put the error message in res.locals", () => {
@@ -110,7 +110,7 @@ describe("Error middlewares", () => {
       const res = httpMocks.createResponse();
       const sendSpy = jest.spyOn(res, "send");
 
-      errorHandler(error, httpMocks.createRequest(), res);
+      errorHandler(error, httpMocks.createRequest(), res, () => {});
 
       expect(sendSpy).toHaveBeenCalledWith(expect.objectContaining({ code: error.statusCode, message: error.message }));
       expect(res.locals.errorMessage).toBe(error.message);
@@ -122,12 +122,12 @@ describe("Error middlewares", () => {
       const res = httpMocks.createResponse();
       const sendSpy = jest.spyOn(res, "send");
 
-      errorHandler(error, httpMocks.createRequest(), res);
+      errorHandler(error, httpMocks.createRequest(), res, () => {});
 
       expect(sendSpy).toHaveBeenCalledWith(
         expect.objectContaining({ code: error.statusCode, message: error.message, stack: error.stack }),
       );
-      config.env = process.env.NODE_ENV;
+      config.env = process.env.NODE_ENV as "production" | "development" | "test";
     });
 
     test("should send internal server error status and message if in production mode and error is not operational", () => {
@@ -136,7 +136,7 @@ describe("Error middlewares", () => {
       const res = httpMocks.createResponse();
       const sendSpy = jest.spyOn(res, "send");
 
-      errorHandler(error, httpMocks.createRequest(), res);
+      errorHandler(error, httpMocks.createRequest(), res, () => {});
 
       expect(sendSpy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -145,7 +145,7 @@ describe("Error middlewares", () => {
         }),
       );
       expect(res.locals.errorMessage).toBe(error.message);
-      config.env = process.env.NODE_ENV;
+      config.env = process.env.NODE_ENV as "production" | "development" | "test";
     });
 
     test("should preserve original error status and message if in production mode and error is operational", () => {
@@ -154,7 +154,7 @@ describe("Error middlewares", () => {
       const res = httpMocks.createResponse();
       const sendSpy = jest.spyOn(res, "send");
 
-      errorHandler(error, httpMocks.createRequest(), res);
+      errorHandler(error, httpMocks.createRequest(), res, () => {});
 
       expect(sendSpy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -162,7 +162,7 @@ describe("Error middlewares", () => {
           message: error.message,
         }),
       );
-      config.env = process.env.NODE_ENV;
+      config.env = process.env.NODE_ENV as "production" | "development" | "test";
     });
   });
 });

@@ -1,17 +1,18 @@
 import request from "supertest";
 import faker from "faker";
 import httpStatus from "http-status";
-import app from "../../src/app";
-import setupTestDB from "../utils/setupTestDB";
-import { User } from "../../src/models";
-import { userOne, userTwo, admin, insertUsers } from "../fixtures/user.fixture";
-import { userOneAccessToken, adminAccessToken } from "../fixtures/token.fixture";
+import app from "@/app";
+import { User } from "@/models";
+import { User as UserObj } from "@/interfaces/entities/user.interface";
+import setupTestDB from "@@/tests/utils/setupTestDB";
+import { userOne, userTwo, admin, insertUsers } from "@@/tests/fixtures/user.fixture";
+import { userOneAccessToken, adminAccessToken } from "@@/tests/fixtures/token.fixture";
 
 setupTestDB();
 
 describe("User routes", () => {
   describe("POST /v1/users", () => {
-    let newUser;
+    let newUser: UserObj;
 
     beforeEach(() => {
       newUser = {

@@ -18,7 +18,7 @@ import * as userService from "./user.service";
  * @returns {string}
  */
 export const generateToken = (
-  userId: Types.ObjectId | string,
+  userId: Types.ObjectId,
   expires: moment.Moment,
   type: string,
   secret = config.jwt.secret,
@@ -43,7 +43,7 @@ export const generateToken = (
  */
 export const saveToken = async (
   token: string,
-  userId: Types.ObjectId | string,
+  userId: Types.ObjectId,
   expires: moment.Moment,
   type: string,
   blacklisted = false,

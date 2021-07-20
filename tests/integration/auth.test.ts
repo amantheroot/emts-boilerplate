@@ -4,23 +4,25 @@ import httpStatus from "http-status";
 import httpMocks from "node-mocks-http";
 import moment from "moment";
 import bcrypt from "bcryptjs";
-import app from "../../src/app";
-import config from "../../src/config/config";
-import auth from "../../src/middlewares/auth";
-import { tokenService, emailService } from "../../src/services";
-import ApiError from "../../src/utils/ApiError";
-import setupTestDB from "../utils/setupTestDB";
-import { User, Token } from "../../src/models";
-import { roleRights } from "../../src/config/roles";
-import { tokenTypes } from "../../src/config/tokens";
-import { userOne, admin, insertUsers } from "../fixtures/user.fixture";
-import { userOneAccessToken, adminAccessToken } from "../fixtures/token.fixture";
+import app from "@/app";
+import config from "@/config/config";
+import auth from "@/middlewares/auth";
+import { tokenService, emailService } from "@/services";
+import ApiError from "@/utils/ApiError";
+import { User, Token } from "@/models";
+import { roleRights } from "@/config/roles";
+import { tokenTypes } from "@/config/tokens";
+import { User as UserObj } from "@/interfaces/entities/user.interface";
+import { AuthRequest } from "@/interfaces/middlewares/request.interface";
+import setupTestDB from "@@/tests/utils/setupTestDB";
+import { userOne, admin, insertUsers } from "@@/tests/fixtures/user.fixture";
+import { userOneAccessToken, adminAccessToken } from "@@/tests/fixtures/token.fixture";
 
 setupTestDB();
 
 describe("Auth routes", () => {
   describe("POST /v1/auth/register", () => {
-    let newUser;
+    let newUser: UserObj;
     beforeEach(() => {
       newUser = {
         name: faker.name.findName(),
@@ -219,7 +221,7 @@ describe("Auth routes", () => {
     test("should return 401 error if refresh token is expired", async () => {
       await insertUsers([userOne]);
       const expires = moment().subtract(1, "minutes");
-      const refreshToken = tokenService.generateToken(userOne._id, expires);
+      const refreshToken = tokenService.generateToken(userOne._id, expires, tokenTypes.REFRESH);
       await tokenService.saveToken(refreshToken, userOne._id, expires, tokenTypes.REFRESH);
 
       await request(app).post("/v1/auth/refresh-tokens").send({ refreshToken }).expect(httpStatus.UNAUTHORIZED);
@@ -236,7 +238,10 @@ describe("Auth routes", () => {
 
   describe("POST /v1/auth/forgot-password", () => {
     beforeEach(() => {
-      jest.spyOn(emailService.transport, "sendMail").mockResolvedValue();
+      jest.spyOn(emailService.transport, "sendMail").mockResolvedValue({
+        success: true,
+        dummy: true,
+      } as any);
     });
 
     test("should return 204 and send reset password email to the user", async () => {
@@ -363,7 +368,10 @@ describe("Auth routes", () => {
 
   describe("POST /v1/auth/send-verification-email", () => {
     beforeEach(() => {
-      jest.spyOn(emailService.transport, "sendMail").mockResolvedValue();
+      jest.spyOn(emailService.transport, "sendMail").mockResolvedValue({
+        success: true,
+        dummy: true,
+      } as any);
     });
 
     test("should return 204 and send verification email to the user", async () => {
@@ -393,7 +401,7 @@ describe("Auth routes", () => {
     test("should return 204 and verify the email", async () => {
       await insertUsers([userOne]);
       const expires = moment().add(config.jwt.verifyEmailExpirationMinutes, "minutes");
-      const verifyEmailToken = tokenService.generateToken(userOne._id, expires);
+      const verifyEmailToken = tokenService.generateToken(userOne._id, expires, tokenTypes.VERIFY_EMAIL);
       await tokenService.saveToken(verifyEmailToken, userOne._id, expires, tokenTypes.VERIFY_EMAIL);
 
       await request(app)
@@ -422,7 +430,7 @@ describe("Auth routes", () => {
     test("should return 401 if verify email token is blacklisted", async () => {
       await insertUsers([userOne]);
       const expires = moment().add(config.jwt.verifyEmailExpirationMinutes, "minutes");
-      const verifyEmailToken = tokenService.generateToken(userOne._id, expires);
+      const verifyEmailToken = tokenService.generateToken(userOne._id, expires, tokenTypes.VERIFY_EMAIL);
       await tokenService.saveToken(verifyEmailToken, userOne._id, expires, tokenTypes.VERIFY_EMAIL, true);
 
       await request(app)
@@ -435,7 +443,7 @@ describe("Auth routes", () => {
     test("should return 401 if verify email token is expired", async () => {
       await insertUsers([userOne]);
       const expires = moment().subtract(1, "minutes");
-      const verifyEmailToken = tokenService.generateToken(userOne._id, expires);
+      const verifyEmailToken = tokenService.generateToken(userOne._id, expires, tokenTypes.VERIFY_EMAIL);
       await tokenService.saveToken(verifyEmailToken, userOne._id, expires, tokenTypes.VERIFY_EMAIL);
 
       await request(app)
@@ -447,7 +455,7 @@ describe("Auth routes", () => {
 
     test("should return 401 if user is not found", async () => {
       const expires = moment().add(config.jwt.verifyEmailExpirationMinutes, "minutes");
-      const verifyEmailToken = tokenService.generateToken(userOne._id, expires);
+      const verifyEmailToken = tokenService.generateToken(userOne._id, expires, tokenTypes.VERIFY_EMAIL);
       await tokenService.saveToken(verifyEmailToken, userOne._id, expires, tokenTypes.VERIFY_EMAIL);
 
       await request(app)
@@ -462,7 +470,7 @@ describe("Auth routes", () => {
 describe("Auth middleware", () => {
   test("should call next with no errors if access token is valid", async () => {
     await insertUsers([userOne]);
-    const req = httpMocks.createRequest({ headers: { Authorization: `Bearer ${userOneAccessToken}` } });
+    const req = httpMocks.createRequest({ headers: { Authorization: `Bearer ${userOneAccessToken}` } }) as AuthRequest;
     const next = jest.fn();
 
     await auth()(req, httpMocks.createResponse(), next);

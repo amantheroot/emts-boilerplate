@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import faker from "faker";
-import User from "../../src/models/user.model";
+import User from "@/models/user.model";
+import { User as UserObj } from "@/interfaces/entities/user.interface";
 
 const password = "password1";
 const salt = bcrypt.genSaltSync(8);
@@ -14,7 +15,7 @@ export const userOne = {
   password,
   role: "user",
   isEmailVerified: false,
-};
+} as UserObj;
 
 export const userTwo = {
   _id: mongoose.Types.ObjectId(),
@@ -23,7 +24,7 @@ export const userTwo = {
   password,
   role: "user",
   isEmailVerified: false,
-};
+} as UserObj;
 
 export const admin = {
   _id: mongoose.Types.ObjectId(),
@@ -32,8 +33,8 @@ export const admin = {
   password,
   role: "admin",
   isEmailVerified: false,
-};
+} as UserObj;
 
-export const insertUsers = async (users) => {
+export const insertUsers = async (users: UserObj[]) => {
   await User.insertMany(users.map((user) => ({ ...user, password: hashedPassword })));
 };

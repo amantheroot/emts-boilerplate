@@ -54,12 +54,12 @@ export const getUserByEmail = async (email: string) => {
  * @param {Object} updateBody
  * @returns {Promise<User>}
  */
-export const updateUserById = async (userId: Types.ObjectId | string, updateBody: UserObj) => {
+export const updateUserById = async (userId: Types.ObjectId, updateBody: UserObj) => {
   const user = await getUserById(userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, "User not found");
   }
-  if (updateBody.email && (await (User as any).isEmailTaken(updateBody.email, userId))) {
+  if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Email already taken");
   }
   Object.assign(user, updateBody);
