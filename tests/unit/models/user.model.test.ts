@@ -1,9 +1,10 @@
 import faker from "faker";
-import { User } from "../../../src/models";
+import { User } from "@/models";
+import { User as UserObj } from "@/interfaces/entities/user.interface";
 
 describe("User model", () => {
   describe("User validation", () => {
-    let newUser;
+    let newUser: UserObj;
     beforeEach(() => {
       newUser = {
         name: faker.name.findName(),

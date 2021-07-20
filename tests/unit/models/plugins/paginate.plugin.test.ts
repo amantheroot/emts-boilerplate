@@ -1,6 +1,11 @@
-import { model, Schema, SchemaTypes } from "mongoose";
+import { Document, Model, model, Schema, SchemaTypes } from "mongoose";
 import setupTestDB from "@@/tests/utils/setupTestDB";
 import paginate from "@/models/plugins/paginate.plugin";
+import { PaginateResult } from "@/interfaces/plugins/paginateResult.interface";
+
+interface TestModel extends Model<Document> {
+  paginate: (filter: Object, options: Object) => PaginateResult;
+}
 
 const projectSchema = new Schema({
   name: {
@@ -16,7 +21,7 @@ projectSchema.virtual("tasks", {
 });
 
 projectSchema.plugin(paginate);
-const Project = model("Project", projectSchema);
+const Project = model("Project", projectSchema) as TestModel;
 
 const taskSchema = new Schema({
   name: {
@@ -31,7 +36,7 @@ const taskSchema = new Schema({
 });
 
 taskSchema.plugin(paginate);
-const Task = model("Task", taskSchema);
+const Task = model("Task", taskSchema) as TestModel;
 
 setupTestDB();
 
