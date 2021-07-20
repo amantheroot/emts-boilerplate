@@ -47,7 +47,7 @@ const paginate = (schema: Schema): void => {
           populateOption
             .split(".")
             .reverse()
-            .reduce((a, b) => ({ path: b, populate: a } as any)),
+            .reduce((a, b) => ({ path: b, populate: a } as unknown as string)),
         );
       });
     }
