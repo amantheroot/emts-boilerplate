@@ -13,7 +13,8 @@
   ],
   "plugins": ["jest", "security", "prettier"],
   "parserOptions": {
-    "ecmaVersion": 2018
+    "ecmaVersion": 2018,
+    "project": "tsconfig.json"
   },
   "rules": {
     "no-console": "error",
