@@ -6,7 +6,7 @@ import { roleRights } from "@/config/roles";
 import { UserDoc } from "@/interfaces/documents/user.interface";
 
 const verifyCallback =
-  (req: Request, resolve: (value?: unknown) => void, reject: (reason?: any) => void, requiredRights: string[]) =>
+  (req: Request, resolve: (value?: unknown) => void, reject: (reason?: unknown) => void, requiredRights: string[]) =>
   async (err: Error, user: UserDoc, info: string) => {
     if (err || info || !user) {
       return reject(new ApiError(httpStatus.UNAUTHORIZED, "Please authenticate"));

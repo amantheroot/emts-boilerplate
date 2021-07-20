@@ -8,7 +8,8 @@ const validate =
   (schema: Record<string, Joi.ObjectSchema>): RequestHandler =>
   (req: Request, res: Response, next: NextFunction) => {
     const validSchema = pick(schema, ["params", "query", "body"]);
-    const object = pick(req as any, Object.keys(validSchema));
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    const object = pick(req as Record<string, any>, Object.keys(validSchema));
     const { value, error } = Joi.compile(validSchema)
       .prefs({ errors: { label: "key" }, abortEarly: false })
       .validate(object);
