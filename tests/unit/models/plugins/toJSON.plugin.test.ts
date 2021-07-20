@@ -65,6 +65,7 @@ describe("toJSON plugin", () => {
     expect(doc.toJSON()).toHaveProperty("public");
   });
 
+  // eslint-disable-next-line  jest/no-commented-out-tests
   // it("should also call the schema toJSON transform function", () => {
   //   const schema = new Schema(
   //     {

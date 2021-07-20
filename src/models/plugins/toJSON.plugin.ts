@@ -10,6 +10,7 @@ import { SchemaType } from "@/interfaces/plugins/schemaType.interface";
  *  - replaces _id with id
  */
 
+// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 const deleteAtPath = (obj: Record<string, any>, path: string[], index: number) => {
   if (index === path.length - 1) {
     delete obj[path[index]];
