@@ -1,10 +1,24 @@
-import { Document, Model, model, Schema, SchemaTypes } from "mongoose";
+import { Document, Model, model, Schema, SchemaTypes, Types } from "mongoose";
 import setupTestDB from "@@/tests/utils/setupTestDB";
 import paginate from "@/models/plugins/paginate.plugin";
 import { PaginateResult } from "@/interfaces/plugins/paginateResult.interface";
 
-interface TestModel extends Model<Document> {
-  paginate: (filter: Record<string, unknown>, options: Record<string, unknown>) => PaginateResult;
+interface TaskDoc extends Document {
+  name: string;
+  project: Types.ObjectId | ProjectDoc;
+}
+
+interface ProjectDoc extends Document {
+  name: string;
+  tasks: TaskDoc[];
+}
+
+interface TaskModel extends Model<TaskDoc> {
+  paginate: (filter: Record<string, unknown>, options: Record<string, string>) => PaginateResult<TaskDoc>;
+}
+
+interface ProjectModel extends Model<ProjectDoc> {
+  paginate: (filter: Record<string, unknown>, options: Record<string, string>) => PaginateResult<ProjectDoc>;
 }
 
 const projectSchema = new Schema({
@@ -21,7 +35,7 @@ projectSchema.virtual("tasks", {
 });
 
 projectSchema.plugin(paginate);
-const Project = model("Project", projectSchema) as TestModel;
+const Project = model("Project", projectSchema) as ProjectModel;
 
 const taskSchema = new Schema({
   name: {
@@ -36,7 +50,7 @@ const taskSchema = new Schema({
 });
 
 taskSchema.plugin(paginate);
-const Task = model("Task", taskSchema) as TestModel;
+const Task = model("Task", taskSchema) as TaskModel;
 
 setupTestDB();
 

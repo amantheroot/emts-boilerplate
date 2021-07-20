@@ -21,7 +21,7 @@ const paginate = (schema: Schema): void => {
    * @param {number} [options.page] - Current page (default = 1)
    * @returns {Promise<QueryResult>}
    */
-  schema.statics.paginate = async function (filter: Record<string, unknown>, options: Record<string, any>) {
+  schema.statics.paginate = async function (filter: Record<string, unknown>, options: Record<string, string>) {
     let sort = "";
     if (options.sortBy) {
       const sortingCriteria: string[] = [];

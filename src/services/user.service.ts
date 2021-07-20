@@ -29,7 +29,7 @@ export const createUser = async (userBody: UserObj): Promise<UserDoc> => {
  */
 export const queryUsers = async (
   filter: Record<string, unknown>,
-  options: Record<string, unknown>,
+  options: Record<string, string>,
 ): Promise<PaginateResult<UserDoc>> => {
   const users = await User.paginate(filter, options);
   return users;
