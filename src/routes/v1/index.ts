@@ -6,6 +6,13 @@ import docsRoute from "./docs.route";
 
 const router = express.Router();
 
+// Root Route
+router.get("/", (req, res, next) => {
+  res.json({
+    message: "Pong!",
+  });
+});
+
 const defaultRoutes = [
   {
     path: "/auth",
