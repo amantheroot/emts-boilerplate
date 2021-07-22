@@ -7,6 +7,7 @@ import docsRoute from "./docs.route";
 const router = express.Router();
 
 // Root Route
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 router.get("/", (req, res, next) => {
   res.json({
     message: "Pong!",
