@@ -12,9 +12,8 @@
   },
   "scripts": {
     "start": "pm2 start ecosystem.config.json --no-daemon",
-    "dev": "cross-env NODE_ENV=development npm run nodemon",
+    "dev": "nodemon --config nodemon.json src/index.ts",
     "build": "tsc",
-    "nodemon": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' -r ts-node/register/transpile-only -r tsconfig-paths/register -r dotenv/config --exec ts-node src/index.ts",
     "test": "jest -i --colors --verbose --detectOpenHandles",
     "test:watch": "jest -i --watchAll",
     "coverage": "jest -i --coverage",
