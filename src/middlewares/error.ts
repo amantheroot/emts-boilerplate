@@ -18,7 +18,7 @@ export const errorConverter = (err: ApiError | Error, req: Request, res: Respons
   next(error);
 };
 
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const errorHandler = (err: ApiError, req: Request, res: Response, next: NextFunction): void => {
   let { statusCode, message } = err;
   if (config.env === "production" && !err.isOperational) {
