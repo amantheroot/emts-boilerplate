@@ -13,7 +13,7 @@
   "scripts": {
     "start": "pm2 start ecosystem.config.json --no-daemon",
     "dev": "nodemon --config nodemon.json src/index.ts",
-    "build": "rimraf build && tsc && cp .env build/.env",
+    "build": "rimraf build && tsc && cp .env build/.env && cp ecosystem.config.json build/ecosystem.config.json",
     "test": "jest -i --colors --verbose --detectOpenHandles",
     "test:watch": "jest -i --watchAll",
     "coverage": "jest -i --coverage",
