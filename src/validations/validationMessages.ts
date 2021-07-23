@@ -1,4 +1,4 @@
-export const objectIdMessages = (label: string) => ({
+export const objectIdMessages = (label: string): Record<string, string> => ({
   "string.pattern": `"${label}" must be a valid mongo id`,
 });
 
